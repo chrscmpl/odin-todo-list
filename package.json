@@ -2,7 +2,7 @@
 	"name": "odin-todo-list",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.ts",
+	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "webpack --config webpack.dev.js",
@@ -31,8 +31,6 @@
 		"mini-css-extract-plugin": "^2.6.1",
 		"prettier": "2.7.1",
 		"style-loader": "^3.3.1",
-		"ts-loader": "^9.3.1",
-		"typescript": "^4.8.2",
 		"webpack": "^5.74.0",
 		"webpack-cli": "^4.10.0",
 		"webpack-merge": "^5.8.0"
