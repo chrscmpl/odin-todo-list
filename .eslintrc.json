@@ -11,6 +11,7 @@
 	},
 	"rules": {
 		"indent": ["error", "tab"],
-		"no-tabs": "off"
+		"no-tabs": "off",
+		"no-plusplus": "off"
 	}
 }
