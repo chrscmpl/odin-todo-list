@@ -1,3 +1,4 @@
 .main {
 	grid-area: main;
+	background: var(--color1);
 }
