@@ -2,4 +2,5 @@
 	grid-area: sidebar;
 	background: var(--color1);
 	border-right: 2px solid var(--color1-txt);
+	display: grid;
 }
