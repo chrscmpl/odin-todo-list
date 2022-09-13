@@ -6,6 +6,13 @@ import Sidebar from './components/sidebar/sidebar';
 import Main from './components/main/main';
 import Footer from './components/footer/footer';
 
+// ////////////// REMOVE ////////////////////
+import Todo from './todo-list/todo';
+import Project from './todo-list/project';
+import TodoData from './todo-list/todo-data';
+import TodoDiv from './components/todo/todo';
+// ////////////// REMOVE ////////////////////
+
 document.querySelector(':root').setAttribute('lang', 'en');
 
 const content = document.createElement('div');
@@ -17,3 +24,21 @@ content.appendChild(Main());
 content.appendChild(Footer());
 
 document.body.appendChild(content);
+
+// ////////////// REMOVE ////////////////////
+const proj = new Project();
+for (let i = 0; i < 10; i++) {
+	proj.push(
+		new Todo({
+			title: 'title',
+			description: 'description',
+			dueDate: '25/12/2000',
+			notes: 'notes',
+		})
+	);
+}
+proj.todo
+	.map(todo => new TodoData(todo))
+	.map(todo => TodoDiv(todo))
+	.forEach(todo => document.querySelector('.main').appendChild(todo));
+// ////////////// REMOVE ////////////////////
