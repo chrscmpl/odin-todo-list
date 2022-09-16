@@ -1,0 +1,46 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.todo {
+	display: grid;
+	grid-template-columns: 5px 1fr;
+	grid-template-rows: auto auto;
+	overflow: hidden;
+
+	border: 2px solid var(--color1-txt);
+	border-radius: var(--br);
+}
+
+.todo::before {
+	grid-row: 1 / -1;
+	content: '';
+}
+
+.todo.low::before {
+	background-color: cornflowerblue;
+}
+
+.todo.normal::before {
+	background-color: green;
+}
+
+.todo.high::before {
+	background-color: orangered;
+}
+
+.todo-hidden,
+.todo-shown {
+	display: grid;
+	place-items: center;
+}
+
+.todo-shown {
+	grid-auto-flow: column;
+}
+
+.todo-hidden {
+	display: none;
+}

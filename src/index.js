@@ -34,6 +34,8 @@ for (let i = 0; i < 10; i++) {
 			description: 'description',
 			dueDate: '25/12/2000',
 			notes: 'notes',
+			priority: i % 3 ? 'normal' : i % 2 ? 'low' : 'high',
+			checked: i % 2,
 		})
 	);
 }
