@@ -12,9 +12,38 @@ export default function Todo(todoData) {
 	const todo = document.createElement('div');
 	todo.classList = 'todo';
 
-	Object.keys(todoData).forEach(key =>
-		todo.appendChild(Field(key, todoData[key]))
-	);
+	const shown = document.createElement('div');
+	shown.classList = 'todo-shown';
+	todo.appendChild(shown);
+
+	const hidden = document.createElement('div');
+	hidden.classList = 'todo-hidden';
+	todo.appendChild(hidden);
+
+	Object.keys(todoData).forEach(key => {
+		switch (key) {
+			case 'title':
+			case 'dueDate':
+				shown.appendChild(Field(key, todoData[key]));
+				break;
+
+			case 'description':
+			case 'notes':
+				hidden.appendChild(Field(key, todoData[key]));
+				break;
+
+			case 'checked':
+				todo.classList.add(todoData[key] ? 'checked' : 'not-checked');
+				break;
+
+			case 'priority':
+				todo.classList.add(todoData[key]);
+				break;
+
+			default:
+				throw new Error('Invalid field');
+		}
+	});
 
 	return todo;
 }
