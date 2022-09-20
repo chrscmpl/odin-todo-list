@@ -6,10 +6,13 @@
 
 .todo {
 	display: grid;
-	grid-template-columns: 5px 1fr;
-	grid-template-rows: auto auto;
+	grid-template:
+		'priority shown' auto
+		'priority btn' auto
+		'priority hidden' auto
+		/ 5px 1fr;
 	overflow: hidden;
-	height: 60px;
+	height: min-content;
 
 	border: 2px solid var(--color1-txt);
 	border-radius: var(--br);
@@ -18,7 +21,7 @@
 }
 
 .todo::before {
-	grid-row: 1 / -1;
+	grid-area: priority;
 	content: '';
 }
 
@@ -42,6 +45,7 @@
 }
 
 .todo-shown {
+	grid-area: shown;
 	grid-auto-flow: column;
 }
 
@@ -53,6 +57,11 @@
 	justify-self: end;
 }
 
-.todo-hidden {
+.todo-show-btn {
+	grid-area: btn;
+}
+
+.todo:not(.show-hidden) .todo-hidden {
+	grid-area: hidden;
 	display: none;
 }

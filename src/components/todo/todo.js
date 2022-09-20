@@ -1,5 +1,4 @@
 import './todo.css';
-import '../../todo-list/todo-data';
 
 function Field(name, content) {
 	const field = document.createElement('span');
@@ -44,6 +43,13 @@ export default function Todo(todoData) {
 				throw new Error('Invalid field');
 		}
 	});
+
+	const showBtn = document.createElement('button');
+	showBtn.className = 'todo-show-btn';
+	showBtn.setAttribute('type', 'button');
+	showBtn.textContent = 'show';
+	showBtn.addEventListener('click', () => todo.classList.toggle('show-hidden'));
+	todo.appendChild(showBtn);
 
 	return todo;
 }

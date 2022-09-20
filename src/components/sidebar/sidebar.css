@@ -1,6 +1,6 @@
 .sidebar {
 	grid-area: sidebar;
 	background: var(--color3);
-	border-right: 2px solid var(--color1-txt);
 	display: grid;
+	padding: 20px;
 }

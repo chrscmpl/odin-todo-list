@@ -9,8 +9,8 @@ import Footer from './components/footer/footer';
 // ////////////// REMOVE ////////////////////
 import Todo from './todo-list/todo';
 import Project from './todo-list/project';
-import TodoData from './todo-list/todo-data';
 import TodoDiv from './components/todo/todo';
+import ProjectDiv from './components/project/project';
 // ////////////// REMOVE ////////////////////
 
 document.querySelector(':root').setAttribute('lang', 'en');
@@ -40,7 +40,8 @@ for (let i = 0; i < 30; i++) {
 	);
 }
 proj.todo
-	.map(todo => new TodoData(todo))
 	.map(todo => TodoDiv(todo))
 	.forEach(todo => document.querySelector('.main').appendChild(todo));
+
+document.querySelector('.sidebar').appendChild(ProjectDiv(proj));
 // ////////////// REMOVE ////////////////////
