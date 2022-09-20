@@ -9,9 +9,12 @@
 	grid-template-columns: 5px 1fr;
 	grid-template-rows: auto auto;
 	overflow: hidden;
+	height: 60px;
 
 	border: 2px solid var(--color1-txt);
 	border-radius: var(--br);
+	background-color: var(--color1);
+	color: var(--color1-txt);
 }
 
 .todo::before {
@@ -20,25 +23,34 @@
 }
 
 .todo.low::before {
-	background-color: cornflowerblue;
+	background-color: var(--priority-low-clr);
 }
 
 .todo.normal::before {
-	background-color: green;
+	background-color: var(--priority-normal-clr);
 }
 
 .todo.high::before {
-	background-color: orangered;
+	background-color: var(--priority-high-clr);
 }
 
 .todo-hidden,
 .todo-shown {
+	padding: 20px;
 	display: grid;
 	place-items: center;
 }
 
 .todo-shown {
 	grid-auto-flow: column;
+}
+
+.todo-shown > .title {
+	justify-self: start;
+}
+
+.todo-shown > .dueDate {
+	justify-self: end;
 }
 
 .todo-hidden {
