@@ -1,4 +1,7 @@
 .header {
 	grid-area: header;
 	background: var(--color2);
+	z-index: 1;
+
+	box-shadow: var(--shadow);
 }

@@ -5,6 +5,10 @@
 	--color2-txt: #ffffff;
 	--color3: #eeeefe;
 	--color3-txt: #000000;
+	--color4: #8888a8aa;
+	--color4-txt: #ffffff;
+	--color5: #e11d48;
+	--color5-txt: #ffffff;
 
 	--priority-low-clr: var(--color2);
 	--priority-normal-clr: #9b06b9;
@@ -13,10 +17,16 @@
 	--ff: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
 		Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
+	--fs-3: 2rem;
+	--fs-4: 1.5rem;
 	--fs-p: 1rem;
 
+	--fw-l: 400;
+	--fw-n: 500;
+	--fw-b: 700;
+
 	--br: 10px;
-	--shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+	--shadow: 0px 3px 5px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -31,6 +41,7 @@ body {
 	font-family: var(--ff);
 	background: var(--color1);
 	font-size: var(--fs-p);
+	font-weight: var(--fw-n);
 }
 
 #content {

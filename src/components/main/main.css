@@ -4,16 +4,19 @@
 	gap: 5px;
 	overflow-y: auto;
 	padding: 5px;
+	align-content: start;
 
 	background: var(--color3);
 	color: var(--color3-txt);
 }
 
-.main::-webkit-scrollbar {
-	background-color: var(--color1);
-}
+@media (orientation: landscape) {
+	.main::-webkit-scrollbar {
+		background-color: var(--color1);
+	}
 
-.main::-webkit-scrollbar-thumb {
-	background-color: var(--color2);
-	box-shadow: var(--shadow);
+	.main::-webkit-scrollbar-thumb {
+		background-color: var(--color2);
+		box-shadow: var(--shadow);
+	}
 }

@@ -44,12 +44,18 @@ export default function Todo(todoData) {
 		}
 	});
 
-	const showBtn = document.createElement('button');
+	const showBtn = document.createElement('div');
+	showBtn.innerHTML =
+		'<svg xmlns="http://www.w3.org/2000/svg" height="38" width="48"><path d="m24 30.75-12-12 2.15-2.15L24 26.5l9.85-9.85L36 18.8Z"/></svg>';
 	showBtn.className = 'todo-show-btn';
-	showBtn.setAttribute('type', 'button');
-	showBtn.textContent = 'show';
-	showBtn.addEventListener('click', () => todo.classList.toggle('show-hidden'));
 	todo.appendChild(showBtn);
+
+	todo.addEventListener(
+		'click',
+		function () {
+			this.classList.toggle('show-hidden');
+		}.bind(todo)
+	);
 
 	return todo;
 }

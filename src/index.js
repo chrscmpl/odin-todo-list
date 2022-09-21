@@ -27,7 +27,7 @@ document.body.appendChild(content);
 
 // ////////////// REMOVE ////////////////////
 const proj = new Project();
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 4; i++) {
 	proj.push(
 		new Todo({
 			title: 'title',

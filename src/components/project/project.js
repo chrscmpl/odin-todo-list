@@ -10,7 +10,7 @@ export default function Project(projectData) {
 	project.appendChild(name);
 
 	const length = document.createElement('span');
-	name.className = 'project-length';
+	length.className = 'project-length';
 	length.textContent = projectData.todo.length;
 	project.appendChild(length);
 

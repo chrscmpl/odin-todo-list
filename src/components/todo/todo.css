@@ -8,7 +8,6 @@
 	display: grid;
 	grid-template:
 		'priority shown' auto
-		'priority btn' auto
 		'priority hidden' auto
 		/ 5px 1fr;
 	overflow: hidden;
@@ -18,6 +17,7 @@
 	border-radius: var(--br);
 	background-color: var(--color1);
 	color: var(--color1-txt);
+	box-shadow: var(--shadow);
 }
 
 .todo::before {
@@ -47,6 +47,8 @@
 .todo-shown {
 	grid-area: shown;
 	grid-auto-flow: column;
+
+	font-size: var(--fs-3);
 }
 
 .todo-shown > .title {
@@ -58,10 +60,28 @@
 }
 
 .todo-show-btn {
-	grid-area: btn;
+	display: grid;
+	place-items: center;
+}
+
+.todo-show-btn path {
+	fill: var(--color4);
+}
+
+.todo-hidden {
+	font-size: var(--fs-4);
+	font-weight: var(--fw-l);
+}
+
+.todo-hidden,
+.todo-show-btn {
+	grid-area: hidden;
 }
 
 .todo:not(.show-hidden) .todo-hidden {
-	grid-area: hidden;
+	display: none;
+}
+
+.todo.show-hidden .todo-show-btn {
 	display: none;
 }
