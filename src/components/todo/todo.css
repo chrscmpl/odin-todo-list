@@ -71,6 +71,8 @@
 .todo-hidden {
 	font-size: var(--fs-4);
 	font-weight: var(--fw-l);
+	justify-items: start;
+	gap: 20px;
 }
 
 .todo-hidden,
@@ -84,4 +86,24 @@
 
 .todo.show-hidden .todo-show-btn {
 	display: none;
+}
+
+.dueDate::selection {
+	background-color: transparent;
+	color: var(--color1-txt);
+}
+
+.todo-hidden > .notes {
+	color: var(--color4);
+}
+
+.todo.add-todo {
+	height: 80px;
+	place-content: center;
+	place-items: center;
+	color: var(--color4);
+}
+
+.todo.todo.add-todo svg {
+	transform: scale(200%);
 }

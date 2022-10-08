@@ -20,3 +20,18 @@
 	width: calc(var(--fs-p) * 2);
 	text-align: center;
 }
+
+.project-length::selection {
+	background-color: transparent;
+	color: var(--color5);
+}
+
+.project.add-project {
+	place-content: center;
+	place-items: center;
+	color: var(--color4);
+}
+
+.project.project.add-project svg {
+	transform: scale(200%);
+}

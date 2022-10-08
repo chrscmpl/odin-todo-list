@@ -1,7 +1,14 @@
 .header {
 	grid-area: header;
-	background: var(--color2);
 	z-index: 1;
+	padding-left: 50px;
 
 	box-shadow: var(--shadow);
+	background: var(--color2);
+	color: var(--color2-txt);
+}
+
+.header > .heading {
+	font-size: var(--fs-1);
+	margin: 20px;
 }
