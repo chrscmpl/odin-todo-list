@@ -1,0 +1,272 @@
+:root {
+	--primary-100: #ffd369;
+	--primary-200: #eeeeee;
+	--primary-300: #fdf6fd;
+	--accent-100: #cfdbd5;
+	--accent-200: #e8eddf;
+	--text-100: #eeeeee;
+	--text-200: #fdebed;
+	--text-300: #292524;
+	--bg-100: #222831;
+	--bg-200: #393e46;
+	--bg-300: #292524;
+	--low-priority: blue;
+	--medium-priority: green;
+	--high-priority: red;
+
+	--ff-fallback: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	--ff: var(--ff-fallback);
+	--ff-header: var(--ff);
+
+	--fs-h1: 3.8rem;
+	--fs-h2: 3rem;
+	--fs-h3: 2.7rem;
+	--fs-h4: 2.3rem;
+	--fs-h5: 1.9rem;
+	--fs-h6: 1.5rem;
+	--fs-p: 1rem;
+
+	--fw-n: 300;
+	--fw-m: 500;
+	--fw-b: 700;
+
+	--border-radius: 10px;
+	--shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--primary-100: #d90429;
+		--primary-200: #ff98aa;
+		--primary-300: #fdf6fd;
+		--accent-100: #ffadad;
+		--accent-200: #ffd6a5;
+		--text-100: #4b4f5d;
+		--text-200: #6a738b;
+		--text-300: #fdf6fd;
+		--bg-100: #edf2f4;
+		--bg-200: #d9dee4;
+		--bg-300: #bfc7d1;
+	}
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	width: 100vw;
+	height: 100vh;
+	max-height: 100%;
+	max-width: 100%;
+	font-size: var(--fs-p);
+	font-family: var(--ff);
+	font-weight: var(--fw-n);
+	background-color: var(--bg-300);
+	color: var(--text-100);
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+	font-weight: var(--fw-b);
+	margin: 0;
+}
+
+h1,
+.h1 {
+	font-size: var(--fs-h1);
+}
+h2,
+.h2 {
+	font-size: var(--fs-h2);
+}
+h3,
+.h3 {
+	font-size: var(--fs-h3);
+}
+h4,
+.h4 {
+	font-size: var(--fs-h4);
+}
+h5,
+.h5 {
+	font-size: var(--fs-h5);
+}
+h6,
+.h6 {
+	font-size: var(--fs-h6);
+}
+
+.round {
+	border-radius: var(--border-radius);
+}
+
+.box-shadow {
+	box-shadow: var(--shadow);
+}
+
+.bg-100 {
+	background-color: var(--bg-100);
+}
+
+.bg-200 {
+	background-color: var(--bg-200);
+}
+
+.bg-300 {
+	background-color: var(--bg-300);
+}
+
+.primary-100 {
+	background-color: var(--primary-100);
+}
+
+.primary-200 {
+	background-color: var(--primary-200);
+}
+
+.primary-300 {
+	background-color: var(--primary-300);
+}
+
+.color-primary-100 {
+	color: var(--primary-100);
+}
+
+.color-primary-200 {
+	color: var(--primary-200);
+}
+
+.color-primary-300 {
+	color: var(--primary-300);
+}
+
+.color-text-100 {
+	color: var(--text-100);
+}
+
+.color-text-200 {
+	color: var(--text-200);
+}
+
+.color-text-300 {
+	color: var(--text-300);
+}
+
+.ff-header {
+	font-family: var(--ff-header);
+}
+
+.centered-box {
+	flex-direction: row;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.flexbox-column {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.flexbox-row-space-between {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.fw-n {
+	font-weight: var(--fw-n);
+}
+
+.fw-m {
+	font-weight: var(--fw-m);
+}
+
+.fw-b {
+	font-weight: var(--fw-b);
+}
+
+.circle {
+	border-radius: 50%;
+	aspect-ratio: 1 / 1;
+}
+
+.bordered-primary-100 {
+	border: 1px solid var(--primary-100);
+}
+
+.low-priority:not(.checked) {
+	border: 1px solid var(--low-priority);
+}
+
+.medium-priority:not(.checked) {
+	border: 1px solid var(--medium-priority);
+	box-shadow: 0px 0px 10px var(--medium-priority);
+}
+
+.high-priority:not(.checked) {
+	border: 1px solid var(--high-priority);
+	box-shadow: 0px 0px 10px var(--high-priority);
+}
+
+#content {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	display: grid;
+	grid-template:
+		'header header' min-content
+		'sidebar main' 1fr
+		'footer footer' min-content
+		/ 1fr 3fr;
+}
+
+#header {
+	grid-area: header;
+	padding: 0 0 15px 5ch;
+	z-index: 2;
+}
+
+#footer {
+	grid-area: footer;
+	z-index: 2;
+}
+
+#sidebar {
+	grid-area: sidebar;
+	padding: 10px;
+	box-shadow: var(--shadow);
+	z-index: 1;
+}
+
+#main {
+	grid-area: main;
+	padding: 20px;
+}
+
+.project,
+.todo {
+	padding: 0.6rem;
+	width: 100%;
+}
+
+.size-indicator {
+	width: 3ch;
+}
