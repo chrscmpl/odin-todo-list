@@ -10,9 +10,10 @@
 	--bg-100: #222831;
 	--bg-200: #393e46;
 	--bg-300: #292524;
-	--low-priority: blue;
-	--medium-priority: green;
-	--high-priority: red;
+
+	--low-priority: rgb(0, 255, 195);
+	--medium-priority: rgb(70, 128, 0);
+	--high-priority: rgb(255, 81, 0);
 
 	--ff-fallback: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
 		Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -180,14 +181,14 @@ h6,
 .flexbox-column {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: stretch;
 	justify-content: flex-start;
 }
 
 .flexbox-row-space-between {
 	display: flex;
 	flex-direction: row;
-	align-items: center;
+	align-items: stretch;
 	justify-content: space-between;
 }
 
@@ -212,18 +213,53 @@ h6,
 	border: 1px solid var(--primary-100);
 }
 
-.low-priority:not(.checked) {
+.low-priority:not(.todo-checked):not(.todo-selected) {
 	border: 1px solid var(--low-priority);
 }
 
-.medium-priority:not(.checked) {
+.medium-priority:not(.todo-checked):not(.todo-selected) {
 	border: 1px solid var(--medium-priority);
 	box-shadow: 0px 0px 10px var(--medium-priority);
 }
 
-.high-priority:not(.checked) {
+.high-priority:not(.todo-checked):not(.todo-selected) {
 	border: 1px solid var(--high-priority);
-	box-shadow: 0px 0px 10px var(--high-priority);
+	box-shadow: 0px 0px 20px var(--high-priority);
+}
+
+.todo.todo-selected {
+	border: 1px solid var(--primary-100);
+	box-shadow: 0px 0px 20px var(--primary-100);
+}
+
+.todo:not(.todo-selected) .todo-hidden {
+	display: none;
+}
+
+.todo.todo-selected .todo-shown {
+	margin-bottom: 20px;
+}
+
+.todo-hidden {
+	gap: 10px;
+}
+
+.todo-expand-arrow path {
+	fill: var(--accent-100);
+}
+
+.todo.todo-selected .todo-expand-arrow {
+	transform: rotate(180deg);
+}
+
+.project,
+.todo {
+	padding: 0.6rem;
+	width: 100%;
+}
+
+.size-indicator {
+	width: 3ch;
 }
 
 #content {
@@ -259,14 +295,4 @@ h6,
 #main {
 	grid-area: main;
 	padding: 20px;
-}
-
-.project,
-.todo {
-	padding: 0.6rem;
-	width: 100%;
-}
-
-.size-indicator {
-	width: 3ch;
 }
