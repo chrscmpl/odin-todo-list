@@ -192,6 +192,13 @@ h6,
 	justify-content: space-between;
 }
 
+.flexbox-row-space-between-centered {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
 .stretch-content {
 	display: grid;
 	align-items: stretch;
@@ -250,8 +257,13 @@ h6,
 	margin-bottom: 20px;
 }
 
-.todo-hidden {
+.todo-hidden,
+.todo-shown {
 	gap: 10px;
+}
+
+.todo-overdue .todo-dueDate {
+	color: red;
 }
 
 .todo-expand-arrow path {
@@ -272,6 +284,7 @@ h6,
 
 .size-indicator {
 	width: 3ch;
+	height: 3ch;
 }
 
 .todo-list {

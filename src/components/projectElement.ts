@@ -4,7 +4,7 @@ import Todo from '../dataObjects/Todo';
 export default function buildProjectElement(project: Project): HTMLElement {
 	const projectElement = document.createElement('div');
 	projectElement.className =
-		'project round bg-300 fw-m flexbox-row-space-between';
+		'project round bg-300 fw-m flexbox-row-space-between-centered';
 	projectElement.textContent = project.title;
 	projectElement.appendChild(buildSizeIndicator(project));
 	return projectElement;

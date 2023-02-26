@@ -1,13 +1,13 @@
 export interface TodoData {
 	title: string;
-	dueDate: Date;
+	dueDate: string | Date;
 	checked: boolean;
 	priority: 'low' | 'medium' | 'high';
 	description?: string;
 	notes?: string;
 }
 
-export default class Todo implements TodoData {
+export default class Todo {
 	private _title: string = '';
 	private _dueDate: Date = new Date();
 	private _checked: boolean = false;
@@ -19,6 +19,17 @@ export default class Todo implements TodoData {
 		Object.assign(this, todo);
 	}
 
+	public toData(): TodoData {
+		return {
+			title: this.title,
+			dueDate: this.dueDate,
+			checked: this.checked,
+			priority: this.priority,
+			description: this.description,
+			notes: this.notes,
+		};
+	}
+
 	public get title(): string {
 		return this._title;
 	}
@@ -28,8 +39,8 @@ export default class Todo implements TodoData {
 	public get dueDate(): Date {
 		return this._dueDate;
 	}
-	public set dueDate(value: Date) {
-		this._dueDate = value;
+	public set dueDate(value: Date | string) {
+		this._dueDate = typeof value === 'object' ? value : new Date(value);
 	}
 	public get checked(): boolean {
 		return this._checked;

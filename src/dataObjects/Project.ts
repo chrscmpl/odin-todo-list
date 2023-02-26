@@ -5,15 +5,20 @@ export interface ProjectData {
 	todoList?: TodoData[];
 }
 
-export default class Project implements ProjectData {
+export default class Project {
 	private _todoList: Todo[] = [];
 	private _title: string = '';
 
 	public constructor(project: ProjectData) {
-		Object.assign(this, {
-			title: project.title,
-			todoList: project?.todoList?.map(todo => new Todo(todo)),
-		});
+		this.title = project.title;
+		this.todoList = project.todoList?.map(todo => new Todo(todo)) ?? [];
+	}
+
+	public toData(): ProjectData {
+		return {
+			title: this.title,
+			todoList: this.todoList.map(todo => todo.toData()),
+		};
 	}
 
 	public get todoList(): Todo[] {

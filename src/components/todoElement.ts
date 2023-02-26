@@ -2,9 +2,12 @@ import Todo from '../dataObjects/Todo';
 
 export default function buildTodoElement(todo: Todo): HTMLElement {
 	const todoElement = document.createElement('div');
+
 	todoElement.className = `todo round bg-300 fw-m flexbox-column ${
 		todo.priority
-	}-priority ${todo.checked ? 'todo-checked' : ''}`;
+	}-priority ${todo.checked ? 'todo-checked' : ''} ${
+		todo.dueDate.getTime() < new Date().getTime() ? 'todo-overdue' : ''
+	}`;
 	todoElement.appendChild(buildShownSection(todo));
 	todoElement.appendChild(buildHiddenSection(todo));
 	todoElement.appendChild(buildExpandArrow());
@@ -13,7 +16,7 @@ export default function buildTodoElement(todo: Todo): HTMLElement {
 
 function buildShownSection(todo: Todo): HTMLElement {
 	const shownSection = document.createElement('div');
-	shownSection.className = `todo-shown flexbox-row-space-between fw-b color-text-200`;
+	shownSection.className = `todo-shown flexbox-column fw-b color-text-200`;
 	addField(shownSection, 'todo-title', todo.title);
 	addField(shownSection, 'todo-dueDate', todo.dueDate.toLocaleString());
 	return shownSection;
