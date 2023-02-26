@@ -8,9 +8,6 @@ export default function buildTodoElement(todo: Todo): HTMLElement {
 	todoElement.appendChild(buildShownSection(todo));
 	todoElement.appendChild(buildHiddenSection(todo));
 	todoElement.appendChild(buildExpandArrow());
-	todoElement.onclick = () => {
-		todoElement.classList.toggle('todo-selected');
-	};
 	return todoElement;
 }
 

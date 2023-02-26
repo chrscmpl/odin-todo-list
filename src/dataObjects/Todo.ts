@@ -1,4 +1,4 @@
-interface TodoData {
+export interface TodoData {
 	title: string;
 	dueDate: Date;
 	checked: boolean;

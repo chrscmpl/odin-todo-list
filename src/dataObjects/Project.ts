@@ -1,8 +1,8 @@
-import Todo from './Todo';
+import Todo, { TodoData } from './Todo';
 
-interface ProjectData {
+export interface ProjectData {
 	title: string;
-	todoList?: Todo[];
+	todoList?: TodoData[];
 }
 
 export default class Project implements ProjectData {
@@ -10,7 +10,10 @@ export default class Project implements ProjectData {
 	private _title: string = '';
 
 	public constructor(project: ProjectData) {
-		Object.assign(this, project);
+		Object.assign(this, {
+			title: project.title,
+			todoList: project?.todoList?.map(todo => new Todo(todo)),
+		});
 	}
 
 	public get todoList(): Todo[] {

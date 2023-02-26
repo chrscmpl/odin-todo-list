@@ -4,8 +4,8 @@ import buildHeader from './components/header';
 import buildFooter from './components/footer';
 import buildSidebar from './components/sidebar';
 import buildMain from './components/main';
-import Todo from './dataObjects/Todo';
-import Project from './dataObjects/Project';
+import buildTodoList from './components/todoList';
+import Project, { ProjectData } from './dataObjects/Project';
 import buildProjectElement from './components/projectElement';
 import buildTodoElement from './components/todoElement';
 
@@ -15,23 +15,48 @@ const header = buildHeader();
 const footer = buildFooter();
 const sidebar = buildSidebar();
 const main = buildMain();
+const todoList = buildTodoList();
+main.appendChild(todoList);
 content.appendChild(header);
 content.appendChild(footer);
 content.appendChild(sidebar);
 content.appendChild(main);
 document.body.appendChild(content);
-const proj: Project = new Project({
-	title: 'default',
-	todoList: [
-		new Todo({
-			title: 'Meeting',
-			checked: false,
-			dueDate: new Date('2023-03-02T09:00'),
-			priority: 'high',
-			description: 'Room A12',
-			notes: 'Bring documents',
-		}),
-	],
-});
-sidebar.appendChild(buildProjectElement(proj));
-main.appendChild(buildTodoElement(proj.todoList[0]));
+
+function getStoredProjects(): Project[] {
+	try {
+		return (<ProjectData[]>(
+			JSON.parse(localStorage.getItem('projects') ?? '[]')
+		)).map(project => new Project(project));
+	} catch {
+		alert("Couldn't load projects");
+		localStorage.setItem('projects', '[]');
+		return [];
+	}
+}
+
+const projects: Project[] = getStoredProjects();
+for (const project of projects) {
+	sidebar.appendChild(buildProjectElement(project));
+	fillTodoList(project);
+}
+sidebar.children[0]?.classList.add('project-selected');
+
+function fillTodoList(project: Project): void {
+	const todoElements: HTMLElement[] = project.todoList.map(todo =>
+		buildTodoElement(todo)
+	);
+	todoElements.forEach(todo => {
+		todo.addEventListener('click', () => todoSelection(todo));
+		todoList.appendChild(todo);
+	});
+}
+
+function todoSelection(selectedTodo: Element): void {
+	if (selectedTodo.classList.contains('todo-selected')) {
+		selectedTodo.classList.remove('todo-selected');
+		return;
+	}
+	todoList.querySelector('.todo-selected')?.classList.remove('todo-selected');
+	selectedTodo.classList.add('todo-selected');
+}
