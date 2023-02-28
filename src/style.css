@@ -14,6 +14,7 @@
 	--low-priority: rgb(0, 255, 195);
 	--medium-priority: rgb(70, 128, 0);
 	--high-priority: rgb(255, 81, 0);
+	--overdue: rgb(255, 0, 110);
 
 	--ff-fallback: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
 		Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -178,6 +179,13 @@ h6,
 	justify-content: center;
 }
 
+.flexbox-row {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: flex-start;
+}
+
 .flexbox-column {
 	display: flex;
 	flex-direction: column;
@@ -201,7 +209,7 @@ h6,
 
 .stretch-content {
 	display: grid;
-	align-items: stretch;
+	align-content: stretch;
 	justify-content: stretch;
 }
 
@@ -240,7 +248,7 @@ h6,
 	box-shadow: 0px 0px 20px var(--high-priority);
 }
 
-.todo.todo-selected {
+.todo.todo-selected:not(.todo-checked) {
 	border: 1px solid var(--primary-100);
 	box-shadow: 0px 0px 20px var(--primary-100);
 }
@@ -249,11 +257,12 @@ h6,
 	border: 1px solid var(--primary-100);
 }
 
-.todo:not(.todo-selected) .todo-hidden {
+.todo:not(.todo-selected) .todo-hidden,
+.todo-checked .todo-hidden {
 	display: none;
 }
 
-.todo.todo-selected .todo-shown {
+.todo.todo-selected:not(.todo-checked) .todo-shown {
 	margin-bottom: 20px;
 }
 
@@ -262,24 +271,117 @@ h6,
 	gap: 10px;
 }
 
-.todo-overdue .todo-dueDate {
-	color: red;
+.todo-overdue:not(.todo-checked) .todo-dueDate {
+	color: var(--overdue);
+}
+
+.todo-overdue:not(.todo-checked) .todo-dueDate::after {
+	content: 'overdue';
+	margin-left: 1ch;
+}
+
+.todo-overdue:not(.todo-checked) .todo-dueDate .todo-date-field {
+	opacity: 0.7;
+	text-decoration: line-through;
 }
 
 .todo-expand-arrow path {
 	fill: var(--accent-100);
 }
 
-.todo.todo-selected .todo-expand-arrow {
+.todo.todo-selected:not(.todo-checked) .todo-expand-arrow {
 	transform: rotate(180deg) translateX(4px);
 }
 
 .project,
-.todo {
+.todo-box {
 	padding: 0.6rem;
 	width: 100%;
 	user-select: none;
-	animation: fadeIn 0.5s;
+}
+
+.todo-box {
+	display: grid;
+	grid-template:
+		'checkbox todo edit-btn' auto
+		'checkbox todo delete-btn' auto
+		/ auto 1fr auto;
+	align-items: center;
+	column-gap: 10px;
+	row-gap: 3px;
+}
+
+.todo-box:has(.todo.todo-selected) {
+	grid-template-rows: auto 1fr;
+}
+
+.todo-checkbox-section {
+	accent-color: var(--primary-100);
+	aspect-ratio: 1 / 1;
+	grid-area: checkbox;
+	width: 30px;
+	padding: 30px;
+}
+
+.todo-checkbox {
+	width: 100%;
+	height: 100%;
+}
+
+input[type='checkbox'].todo-checkbox:not(:checked)::before {
+	content: '';
+	background-color: var(--primary-100);
+	width: 100%;
+	height: 100%;
+	display: block;
+	border-radius: var(--border-radius);
+	border: none;
+}
+
+.todo-edit-button,
+.todo-delete-button {
+	fill: var(--primary-100);
+}
+
+.todo-edit-button {
+	grid-area: edit-btn;
+}
+
+.todo.todo-selected ~ .todo-edit-button {
+	align-self: end;
+}
+
+.todo-delete-button {
+	grid-area: delete-btn;
+}
+.todo.todo-selected ~ .todo-delete-button {
+	align-self: start;
+}
+
+.todo {
+	position: relative;
+	grid-area: todo;
+	padding: 10px;
+}
+
+.todo-checked::after {
+	position: absolute;
+	content: ' ';
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: var(--bg-300);
+	backdrop-filter: blur(20px);
+	opacity: 0.8;
+	z-index: none;
+	pointer-events: none;
+	border-radius: var(--border-radius);
+	border: 1px solid var(--bg-300);
+}
+
+.todo-shown {
+	justify-content: center;
 }
 
 .size-indicator {
@@ -290,17 +392,6 @@ h6,
 .todo-list {
 	gap: 10px;
 	padding: 20px;
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(-20%);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0%);
-	}
 }
 
 #content {

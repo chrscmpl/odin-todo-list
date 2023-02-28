@@ -2,6 +2,16 @@ import Todo from '../dataObjects/Todo';
 
 export default function buildTodoElement(todo: Todo): HTMLElement {
 	const todoElement = document.createElement('div');
+	todoElement.className = 'todo-box';
+	todoElement.appendChild(buildCheckbox(todo));
+	todoElement.appendChild(buildTodoSection(todo));
+	todoElement.appendChild(buildEditButton());
+	todoElement.appendChild(buildDeleteButton());
+	return todoElement;
+}
+
+function buildTodoSection(todo: Todo): HTMLElement {
+	const todoElement = document.createElement('div');
 
 	todoElement.className = `todo round bg-300 fw-m flexbox-column ${
 		todo.priority
@@ -14,11 +24,46 @@ export default function buildTodoElement(todo: Todo): HTMLElement {
 	return todoElement;
 }
 
+function buildCheckbox(todo: Todo): HTMLElement {
+	const checkboxSection = document.createElement('div');
+	checkboxSection.className =
+		'todo-checkbox-section stretch-content bg-300 round bordered-primary-100';
+	const checkbox = document.createElement('input');
+	checkbox.setAttribute('type', 'checkbox');
+	checkbox.className = 'todo-checkbox';
+	checkbox.checked = todo.checked;
+	checkboxSection.appendChild(checkbox);
+	return checkboxSection;
+}
+
+function buildEditButton(): HTMLElement {
+	const editButton = document.createElement('button');
+	editButton.setAttribute('type', 'button');
+	editButton.className = 'todo-edit-button bg-300 round bordered-primary-100';
+	editButton.innerHTML =
+		'<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480 936v-71l216-216 71 71-216 216h-71ZM120 726v-60h300v60H120Zm690-49-71-71 29-29q8-8 21-8t21 8l29 29q8 8 8 21t-8 21l-29 29ZM120 561v-60h470v60H120Zm0-165v-60h470v60H120Z"/></svg>';
+	return editButton;
+}
+
+function buildDeleteButton(): HTMLElement {
+	const deleteButton = document.createElement('button');
+	deleteButton.setAttribute('type', 'button');
+	deleteButton.className =
+		'todo-delete-button bg-300 round bordered-primary-100';
+	deleteButton.innerHTML =
+		'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>';
+	return deleteButton;
+}
+
 function buildShownSection(todo: Todo): HTMLElement {
 	const shownSection = document.createElement('div');
 	shownSection.className = `todo-shown flexbox-column fw-b color-text-200`;
 	addField(shownSection, 'todo-title', todo.title);
-	addField(shownSection, 'todo-dueDate', todo.dueDate.toLocaleString());
+	addField(
+		shownSection,
+		'todo-dueDate',
+		`<span class="todo-date-field">${todo.dueDate.toLocaleString()}</span>`
+	);
 	return shownSection;
 }
 
@@ -47,6 +92,6 @@ function addField(
 ): void {
 	const child = document.createElement('div');
 	child.className = className;
-	child.textContent = textContent;
+	child.innerHTML = textContent;
 	element.appendChild(child);
 }
