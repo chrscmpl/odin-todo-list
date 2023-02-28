@@ -394,6 +394,10 @@ input[type='checkbox'].todo-checkbox:not(:checked)::before {
 	padding: 20px;
 }
 
+.confirm-delete-button {
+	color: var(--text-300) !important;
+}
+
 #content {
 	width: 100vw;
 	height: 100vh;

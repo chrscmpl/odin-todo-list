@@ -2,10 +2,15 @@ import Swal from 'sweetalert2';
 
 const swal = Swal.mixin({
 	customClass: {
-		confirmButton: '',
-		cancelButton: '',
+		confirmButton: 'confirm-delete-button',
+		cancelButton: 'cancel-delete-button',
 	},
-	buttonsStyling: false,
+	buttonsStyling: true,
+	background: 'var(--bg-300)',
+	color: 'var(--primary-100)',
+	confirmButtonColor: 'var(--primary-100)',
+	cancelButtonColor: 'var(--bg-200)',
+	iconColor: 'var(--primary-100)',
 });
 
 //big premise: I don't know async and await so I did this randomly
@@ -24,11 +29,6 @@ export default async function showDeleteTodoPopup(): Promise<boolean> {
 		.then(result => {
 			if (result.isConfirmed) {
 				res = true;
-			} else if (
-				/* Read more about handling dismissals below */
-				result.dismiss === Swal.DismissReason.cancel
-			) {
-				res = false;
 			}
 		});
 	return res;
