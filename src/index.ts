@@ -10,6 +10,7 @@ import buildMain from './components/main';
 import buildTodoList from './components/todoList';
 import buildProjectElement from './components/projectElement';
 import buildTodoElement from './components/todoElement';
+import showDeleteTodoPopup from './components/deteteTodoPopup';
 
 const content = document.createElement('div');
 content.id = 'content';
@@ -82,6 +83,9 @@ function deleteTodo(todo: Todo, todoElement: HTMLElement): void {
 		project =>
 			(project.todoList = project.todoList.filter(todos => todos !== todo))
 	);
-	todoElement.remove();
-	DAO.storeProjects(projects);
+	showDeleteTodoPopup().then(result => {
+		if (!result) return;
+		todoElement.remove();
+		DAO.storeProjects(projects);
+	});
 }

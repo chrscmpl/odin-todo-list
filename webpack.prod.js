@@ -10,7 +10,7 @@ module.exports = merge(common, {
 		rules: [
 			{
 				test: /.css$/,
-				use: [MiniCssExtractPlugin.loader, 'css-loader'],
+				use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
 			},
 			{
 				test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -23,10 +23,7 @@ module.exports = merge(common, {
 		],
 	},
 	optimization: {
-		minimizer: [
-			'...',
-			new CssMinimizerPlugin(),
-		],
+		minimizer: ['...', new CssMinimizerPlugin()],
 	},
 	plugins: [new MiniCssExtractPlugin()],
 });
