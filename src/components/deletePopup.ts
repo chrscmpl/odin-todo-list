@@ -2,8 +2,8 @@ import Swal from 'sweetalert2';
 
 const swal = Swal.mixin({
 	customClass: {
-		confirmButton: 'confirm-delete-button',
-		cancelButton: 'cancel-delete-button',
+		confirmButton: 'swal-confirm-button',
+		cancelButton: 'swal-cancel-button',
 	},
 	buttonsStyling: true,
 	background: 'var(--bg-300)',
@@ -13,11 +13,8 @@ const swal = Swal.mixin({
 	iconColor: 'var(--primary-100)',
 });
 
-//big premise: I don't know async and await so I did this randomly
-//I hope I got it right :)
-export default async function showDeleteTodoPopup(): Promise<boolean> {
-	let res: boolean = false;
-	await swal
+export default async function showDeletePopup(): Promise<boolean> {
+	return await swal
 		.fire({
 			title: 'Are you sure?',
 			icon: 'warning',
@@ -26,10 +23,5 @@ export default async function showDeleteTodoPopup(): Promise<boolean> {
 			cancelButtonText: 'Go back',
 			reverseButtons: true,
 		})
-		.then(result => {
-			if (result.isConfirmed) {
-				res = true;
-			}
-		});
-	return res;
+		.then(result => result.isConfirmed);
 }

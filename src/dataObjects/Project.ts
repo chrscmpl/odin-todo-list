@@ -6,8 +6,9 @@ export interface ProjectData {
 }
 
 export default class Project {
-	private _todoList: Todo[] = [];
-	private _title: string = '';
+	private TodoList: Todo[] = [];
+
+	private Title = '';
 
 	public constructor(project: ProjectData) {
 		this.title = project.title;
@@ -21,16 +22,25 @@ export default class Project {
 		};
 	}
 
+	public remove(todo: Todo): boolean {
+		const oldLenght = this.todoList.length;
+		this.todoList = this.todoList.filter(todos => todos !== todo);
+		return oldLenght !== this.todoList.length;
+	}
+
 	public get todoList(): Todo[] {
-		return this._todoList;
+		return this.TodoList;
 	}
+
 	public set todoList(value: Todo[]) {
-		this._todoList = value;
+		this.TodoList = value;
 	}
+
 	public get title(): string {
-		return this._title;
+		return this.Title;
 	}
+
 	public set title(value: string) {
-		this._title = value;
+		this.Title = value;
 	}
 }

@@ -1,9 +1,17 @@
 {
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint"],
+
 	"env": {
 		"browser": true,
 		"es2021": true
 	},
-	"extends": ["airbnb-base", "prettier"],
+	"extends": [
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"prettier"
+	],
 	"overrides": [],
 	"parserOptions": {
 		"ecmaVersion": "latest",
@@ -11,6 +19,8 @@
 	},
 	"rules": {
 		"indent": ["error", "tab"],
-		"no-tabs": "off"
+		"no-tabs": "off",
+		"import/no-unresolved": "off",
+		"import/extensions": "off"
 	}
 }

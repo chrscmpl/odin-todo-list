@@ -8,12 +8,17 @@ export interface TodoData {
 }
 
 export default class Todo {
-	private _title: string = '';
-	private _dueDate: Date = new Date();
-	private _checked: boolean = false;
-	private _priority: 'low' | 'medium' | 'high' = 'low';
-	private _description?: string;
-	private _notes?: string;
+	private Title = '';
+
+	private DueDate: Date = new Date();
+
+	private Checked = false;
+
+	private Priority: 'low' | 'medium' | 'high' = 'low';
+
+	private Description?: string;
+
+	private Notes?: string;
 
 	public constructor(todo: TodoData) {
 		Object.assign(this, todo);
@@ -30,40 +35,56 @@ export default class Todo {
 		};
 	}
 
+	public toggleChecked(): void {
+		this.checked = !this.checked;
+	}
+
 	public get title(): string {
-		return this._title;
+		return this.Title;
 	}
+
 	public set title(value: string) {
-		this._title = value;
+		if (!value.length) throw new Error('bad title');
+		this.Title = value;
 	}
+
 	public get dueDate(): Date {
-		return this._dueDate;
+		return this.DueDate;
 	}
+
 	public set dueDate(value: Date | string) {
-		this._dueDate = typeof value === 'object' ? value : new Date(value);
+		this.DueDate = typeof value === 'object' ? value : new Date(value);
 	}
+
 	public get checked(): boolean {
-		return this._checked;
+		return this.Checked;
 	}
+
 	public set checked(value: boolean) {
-		this._checked = value;
+		this.Checked = value;
 	}
+
 	public get priority(): 'low' | 'medium' | 'high' {
-		return this._priority;
+		return this.Priority;
 	}
+
 	public set priority(value: 'low' | 'medium' | 'high') {
-		this._priority = value;
+		this.Priority = value;
 	}
+
 	public get description(): string | undefined {
-		return this._description;
+		return this.Description;
 	}
+
 	public set description(value: string | undefined) {
-		this._description = value;
+		this.Description = value;
 	}
+
 	public get notes(): string | undefined {
-		return this._notes;
+		return this.Notes;
 	}
+
 	public set notes(value: string | undefined) {
-		this._notes = value;
+		this.Notes = value;
 	}
 }
