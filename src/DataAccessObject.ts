@@ -5,11 +5,13 @@ const defaultStringValue = JSON.stringify(defaultValue);
 
 export function getStoredProjects(): Project[] {
 	try {
-		return (
+		const projects = (
 			JSON.parse(
 				localStorage.getItem('projects') ?? defaultStringValue
 			) as ProjectData[]
 		).map(project => new Project(project));
+		projects.forEach(sortTodos);
+		return projects;
 	} catch {
 		console.error(
 			`value
@@ -26,6 +28,12 @@ export function storeProjects(projects: Project[]) {
 	localStorage.setItem(
 		'projects',
 		JSON.stringify(projects.map(project => project.toData()))
+	);
+}
+
+function sortTodos(project: Project): void {
+	project.todoList = project.todoList.sort(
+		(todo1, todo2) => todo1.dueDate.getTime() - todo2.dueDate.getTime()
 	);
 }
 

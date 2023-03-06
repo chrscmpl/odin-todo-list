@@ -51,7 +51,7 @@ function deleteTodo(todo: Todo, todoElement: HTMLElement): void {
 
 function editTodo(todo: Todo): void {
 	showTodoCompilationPopup(todo).then(newTodo => {
-		if (!newTodo) return;
+		if (!(newTodo instanceof Todo)) return;
 		Object.assign(todo, newTodo);
 		DAO.storeProjects(projects);
 		fillTodoList(currentProject);
@@ -79,7 +79,12 @@ function addTodoElement(todo: Todo): void {
 
 function fillTodoList(project: Project): void {
 	todoList.innerHTML = '';
-	project.todoList.forEach(todo => addTodoElement(todo));
+	project.todoList
+		.filter(todo => !todo.checked)
+		.forEach(todo => addTodoElement(todo));
+	project.todoList
+		.filter(todo => todo.checked)
+		.forEach(todo => addTodoElement(todo));
 	currentProject = project;
 }
 

@@ -16,13 +16,12 @@ const swal = Swal.mixin({
 	cancelButtonColor: 'var(--bg-200)',
 });
 
-// TODO: make form
 export default async function showTodoCompilationPopup(todo?: Todo) {
 	const form = buildTodoCompilationForm(todo);
 
 	return (await swal
 		.fire({
-			title: 'New Todo',
+			title: todo ? 'Edit todo' : 'New todo',
 			showCancelButton: true,
 			confirmButtonText: 'Enter',
 			html: form.form,
@@ -46,8 +45,10 @@ export default async function showTodoCompilationPopup(todo?: Todo) {
 }
 
 function getPriority(prioritySection: HTMLElement): 'low' | 'medium' | 'high' {
-	const formPriority = [...prioritySection.children]
-		.find(radioBox => (radioBox as HTMLInputElement).checked)
+	const formPriority = [
+		...prioritySection.querySelectorAll(`input[type='radio']`),
+	]
+		.find(radioBox => (radioBox as HTMLInputElement)?.checked)
 		?.getAttribute('value');
 	const validPriorities: any[] = ['low', 'medium', 'high'];
 	if (!validPriorities.includes(formPriority))

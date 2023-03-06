@@ -35,6 +35,7 @@
 
 	--border-radius: 10px;
 	--shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+	--color-scheme: dark;
 }
 
 @media (prefers-color-scheme: light) {
@@ -50,6 +51,8 @@
 		--bg-100: #edf2f4;
 		--bg-200: #d9dee4;
 		--bg-300: #bfc7d1;
+
+		--color-scheme: light;
 	}
 }
 
@@ -319,8 +322,8 @@ h6,
 	accent-color: var(--primary-100);
 	aspect-ratio: 1 / 1;
 	grid-area: checkbox;
-	width: 30px;
-	padding: 30px;
+	width: 60px;
+	padding: 10px;
 }
 
 .todo-checkbox {
@@ -330,11 +333,11 @@ h6,
 
 input[type='checkbox'].todo-checkbox:not(:checked)::before {
 	content: '';
-	background-color: var(--primary-100);
+	background-color: var(--bg-200);
+	border-radius: var(--border-radius);
 	width: 100%;
 	height: 100%;
 	display: block;
-	border-radius: var(--border-radius);
 	border: none;
 }
 
@@ -394,18 +397,51 @@ input[type='checkbox'].todo-checkbox:not(:checked)::before {
 	padding: 20px;
 }
 
+.todo-form {
+	gap: 5px;
+}
+
+.todo-form-section {
+	padding: 2px;
+}
+
+.todo-form-section > input,
+.todo-form-section > textarea {
+	width: 70%;
+	padding: 3px;
+	border: none;
+}
+
+.todo-form-section > input {
+	height: calc(var(--fs-p) * 2);
+}
+
+.priority-radio-box-section {
+	gap: 5px;
+}
+
+.todo-form-section > textarea {
+	resize: none;
+	height: calc(var(--fs-p) * 5);
+}
+
+input {
+	accent-color: var(--primary-100);
+	color-scheme: var(--color-scheme);
+}
+
 .swal-confirm-button {
 	color: var(--text-300) !important;
+}
+
+.swal-cancel-button {
+	color: var(--text-100) !important;
 }
 
 .swal2-validation-message {
 	background-color: var(--bg-300) !important;
 	color: var(--primary-100) !important;
 	font-weight: var(--fw-m) !important;
-}
-
-textarea {
-	resize: none;
 }
 
 #content {

@@ -30,7 +30,7 @@ function buildCheckbox(todo: Todo): HTMLElement {
 		'todo-checkbox-section stretch-content bg-300 round bordered-primary-100';
 	const checkbox = document.createElement('input');
 	checkbox.setAttribute('type', 'checkbox');
-	checkbox.className = 'todo-checkbox';
+	checkbox.className = 'todo-checkbox round';
 	checkbox.checked = todo.checked;
 	checkboxSection.appendChild(checkbox);
 	return checkboxSection;
