@@ -73,10 +73,12 @@ function buildTitleInput(title = ''): HTMLInputElement {
 
 function buildDueDateInput(dueDate = new Date()): HTMLInputElement {
 	const dueDateInput = document.createElement('input');
-	dueDateInput.setAttribute('type', 'date');
+	dueDateInput.setAttribute('type', 'datetime-local');
 	dueDateInput.setAttribute('name', 'dueDate');
 	dueDateInput.className = 'todo-dueDate-input bg-200 color-text-100';
-	dueDateInput.valueAsDate = dueDate;
+	const date = dueDate;
+	date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+	dueDateInput.value = dueDate.toISOString().slice(0, 16);
 	return dueDateInput;
 }
 

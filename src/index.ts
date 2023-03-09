@@ -12,6 +12,7 @@ import buildProjectElement from './components/projectElement';
 import buildTodoElement from './components/todoElement';
 import showDeletePopup from './components/deletePopup';
 import showTodoCompilationPopup from './components/todoCompilationPopup';
+import buildAddButton from './components/addButton';
 // import sampleData from './sample.json';
 
 const content = document.createElement('div');
@@ -77,6 +78,33 @@ function addTodoElement(todo: Todo): void {
 	todoList.appendChild(todoElement);
 }
 
+function getTodoAddBtnSize() {
+	return {
+		height: todoList.querySelector('.todo')?.clientHeight ?? '40px',
+		width: todoList.querySelector('.todo')?.clientWidth ?? '50%',
+	};
+}
+
+function resizeTodoAddBtn(addBtn: HTMLElement) {
+	const size = getTodoAddBtnSize();
+	addBtn.style.height = `${size.height}px`;
+	addBtn.style.width = `${size.width}px`;
+}
+
+function prepareTodoAddBtn(): HTMLElement {
+	const addBtn = buildAddButton(() => {
+		showTodoCompilationPopup().then(newTodo => {
+			if (!(newTodo instanceof Todo)) return;
+			currentProject.todoList.push(newTodo);
+			DAO.storeProjects(projects);
+			fillTodoList(currentProject);
+		});
+	});
+	window.addEventListener('resize', () => resizeTodoAddBtn(addBtn));
+	resizeTodoAddBtn(addBtn);
+	return addBtn;
+}
+
 function fillTodoList(project: Project): void {
 	todoList.innerHTML = '';
 	project.todoList
@@ -85,6 +113,8 @@ function fillTodoList(project: Project): void {
 	project.todoList
 		.filter(todo => todo.checked)
 		.forEach(todo => addTodoElement(todo));
+	todoList.appendChild(prepareTodoAddBtn());
+
 	currentProject = project;
 }
 

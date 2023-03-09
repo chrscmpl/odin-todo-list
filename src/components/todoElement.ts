@@ -12,7 +12,6 @@ export default function buildTodoElement(todo: Todo): HTMLElement {
 
 function buildTodoSection(todo: Todo): HTMLElement {
 	const todoElement = document.createElement('div');
-
 	todoElement.className = `todo round bg-300 fw-m flexbox-column ${
 		todo.priority
 	}-priority ${todo.checked ? 'todo-checked' : ''} ${
@@ -62,7 +61,13 @@ function buildShownSection(todo: Todo): HTMLElement {
 	addField(
 		shownSection,
 		'todo-dueDate',
-		`<span class="todo-date-field">${todo.dueDate.toLocaleString()}</span>`
+		`<span class="todo-date-field">${todo.dueDate.toLocaleString([], {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+			hour: '2-digit',
+			minute: '2-digit',
+		})}</span>`
 	);
 	return shownSection;
 }

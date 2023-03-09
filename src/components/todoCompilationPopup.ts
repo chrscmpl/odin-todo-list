@@ -21,8 +21,9 @@ export default async function showTodoCompilationPopup(todo?: Todo) {
 
 	return (await swal
 		.fire({
-			title: todo ? 'Edit todo' : 'New todo',
+			title: todo ? 'Edit todo' : 'Add todo',
 			showCancelButton: true,
+			allowOutsideClick: false,
 			confirmButtonText: 'Enter',
 			html: form.form,
 			preConfirm: () => {
