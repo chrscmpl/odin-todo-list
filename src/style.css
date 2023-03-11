@@ -351,16 +351,6 @@ h6,
 	height: 100%;
 }
 
-input[type='checkbox'].todo-checkbox:not(:checked)::before {
-	content: '';
-	background-color: var(--bg-200);
-	border-radius: var(--border-radius);
-	width: 100%;
-	height: 100%;
-	display: block;
-	border: none;
-}
-
 .todo-edit-button,
 .todo-delete-button {
 	fill: var(--primary-100);
@@ -415,6 +405,8 @@ input[type='checkbox'].todo-checkbox:not(:checked)::before {
 .todo-list {
 	gap: 10px;
 	padding: 20px;
+	overflow-y: scroll;
+	height: 100%;
 }
 
 .todo-list > .add-btn {
@@ -472,9 +464,22 @@ input {
 	font-weight: var(--fw-m) !important;
 }
 
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--bg-300);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--bg-200);
+}
+
 #content {
 	width: 100vw;
 	height: 100vh;
+	max-height: 100vh;
 	overflow: hidden;
 	display: grid;
 	grid-template:
@@ -506,4 +511,5 @@ input {
 
 #main {
 	grid-area: main;
+	overflow: hidden;
 }

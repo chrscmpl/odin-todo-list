@@ -39,6 +39,7 @@ function todoChecked(todo: Todo, checkedTodo: Element): void {
 	todo.toggleChecked();
 	checkedTodo.classList.toggle('todo-checked');
 	DAO.storeProjects(projects);
+	fillSideBar(currentProject);
 }
 
 function deleteTodo(todo: Todo, todoElement: HTMLElement): void {
@@ -47,6 +48,7 @@ function deleteTodo(todo: Todo, todoElement: HTMLElement): void {
 		if (!result) return;
 		todoElement.remove();
 		DAO.storeProjects(projects);
+		fillSideBar(currentProject);
 	});
 }
 
@@ -79,16 +81,18 @@ function addTodoElement(todo: Todo): void {
 }
 
 function getTodoAddBtnSize() {
+	const clientHeight = todoList.querySelector('.todo')?.clientHeight;
+	const clientWidth = todoList.querySelector('.todo')?.clientWidth;
 	return {
-		height: todoList.querySelector('.todo')?.clientHeight ?? '40px',
-		width: todoList.querySelector('.todo')?.clientWidth ?? '50%',
+		height: clientHeight ? `${clientHeight}px` : '90px',
+		width: clientWidth ? `${clientWidth}px` : '80%',
 	};
 }
 
 function resizeTodoAddBtn(addBtn: HTMLElement) {
 	const size = getTodoAddBtnSize();
-	addBtn.style.height = `${size.height}px`;
-	addBtn.style.width = `${size.width}px`;
+	addBtn.style.height = size.height;
+	addBtn.style.width = size.width;
 }
 
 function prepareTodoAddBtn(): HTMLElement {
@@ -98,6 +102,7 @@ function prepareTodoAddBtn(): HTMLElement {
 			currentProject.todoList.push(newTodo);
 			DAO.storeProjects(projects);
 			fillTodoList(currentProject);
+			fillSideBar(currentProject);
 		});
 	});
 	window.addEventListener('resize', () => resizeTodoAddBtn(addBtn));
@@ -126,10 +131,18 @@ function projectSelection(selectedProject: Element, project: Project): void {
 	fillTodoList(project);
 }
 
-function addProjectElement(project: Project): void {
+function addProjectElement(project: Project, selected: boolean): void {
 	const element: HTMLElement = buildProjectElement(project);
 	element.addEventListener('click', () => projectSelection(element, project));
+	if (selected) projectSelection(element, project);
 	sidebar.appendChild(element);
+}
+
+function fillSideBar(selectedProject?: Project) {
+	sidebar.innerHTML = '';
+	projects.forEach(project =>
+		addProjectElement(project, project == selectedProject)
+	);
 }
 
 // function fillSampleData() {
@@ -143,5 +156,4 @@ content.appendChild(sidebar);
 content.appendChild(main);
 document.body.appendChild(content);
 
-projects.forEach(addProjectElement);
-(sidebar.firstElementChild as HTMLElement)?.click();
+fillSideBar(projects[0]);
