@@ -1,19 +1,18 @@
 import 'normalize.css';
 import './style.css';
 import Project from './dataObjects/Project';
-import Todo from './dataObjects/Todo';
 import DAO from './DataAccessObject';
 import buildHeader from './components/header';
 import buildFooter from './components/footer';
 import buildSidebar from './components/sidebar';
 import buildMain from './components/main';
-import buildTodoList from './components/todoList';
-import buildProjectElement from './components/projectElement';
-import buildTodoElement from './components/todoElement';
-import showDeletePopup from './components/deletePopup';
-import showTodoCompilationPopup from './components/todoCompilationPopup';
-import buildAddButton from './components/addButton';
-// import sampleData from './sample.json';
+import ProjectList from './projectList';
+import TodoList from './todoList';
+import EventHandler from './eventHandler';
+
+const projects: Project[] = DAO.getStoredProjects();
+const currentProject: Project =
+	projects[0] ?? new Project({ title: 'Default Project' });
 
 const content = document.createElement('div');
 content.id = 'content';
@@ -21,139 +20,17 @@ const header = buildHeader();
 const footer = buildFooter();
 const sidebar = buildSidebar();
 const main = buildMain();
-const todoList = buildTodoList();
-const projects: Project[] = DAO.getStoredProjects();
-let currentProject: Project;
+const projectList = new ProjectList(projects);
+const todoList = new TodoList(currentProject);
 
-function todoSelection(selectedTodo: Element): void {
-	if (selectedTodo.classList.contains('todo-checked')) return;
-	if (selectedTodo.classList.contains('todo-selected')) {
-		selectedTodo.classList.remove('todo-selected');
-		return;
-	}
-	todoList.querySelector('.todo-selected')?.classList.remove('todo-selected');
-	selectedTodo.classList.add('todo-selected');
-}
+EventHandler.buildEventHandler(projects, currentProject, todoList, projectList);
 
-function todoChecked(todo: Todo, checkedTodo: Element): void {
-	todo.toggleChecked();
-	checkedTodo.classList.toggle('todo-checked');
-	DAO.storeProjects(projects);
-	fillSideBar(currentProject);
-}
-
-function deleteTodo(todo: Todo, todoElement: HTMLElement): void {
-	projects.forEach(project => project.remove(todo));
-	showDeletePopup().then(result => {
-		if (!result) return;
-		todoElement.remove();
-		DAO.storeProjects(projects);
-		fillSideBar(currentProject);
-	});
-}
-
-function editTodo(todo: Todo): void {
-	showTodoCompilationPopup(todo).then(newTodo => {
-		if (!(newTodo instanceof Todo)) return;
-		Object.assign(todo, newTodo);
-		DAO.storeProjects(projects);
-		fillTodoList(currentProject);
-	});
-}
-
-function addTodoElement(todo: Todo): void {
-	const todoElement = buildTodoElement(todo);
-	const todoSection = todoElement.querySelector('.todo')!;
-	const checkbox = todoElement.querySelector('.todo-checkbox')!;
-	const deleteButton = todoElement.querySelector('.todo-delete-button')!;
-	const editButton = todoElement.querySelector('.todo-edit-button')!;
-	todoSection.addEventListener('click', () => todoSelection(todoSection));
-	checkbox.addEventListener('change', () => {
-		todoChecked(todo, todoSection);
-	});
-	deleteButton.addEventListener('click', () => {
-		deleteTodo(todo, todoElement);
-	});
-	editButton.addEventListener('click', () => {
-		editTodo(todo);
-	});
-	todoList.appendChild(todoElement);
-}
-
-function getTodoAddBtnSize() {
-	const clientHeight = todoList.querySelector('.todo')?.clientHeight;
-	const clientWidth = todoList.querySelector('.todo')?.clientWidth;
-	return {
-		height: clientHeight ? `${clientHeight}px` : '90px',
-		width: clientWidth ? `${clientWidth}px` : '80%',
-	};
-}
-
-function resizeTodoAddBtn(addBtn: HTMLElement) {
-	const size = getTodoAddBtnSize();
-	addBtn.style.height = size.height;
-	addBtn.style.width = size.width;
-}
-
-function prepareTodoAddBtn(): HTMLElement {
-	const addBtn = buildAddButton(() => {
-		showTodoCompilationPopup().then(newTodo => {
-			if (!(newTodo instanceof Todo)) return;
-			currentProject.todoList.push(newTodo);
-			DAO.storeProjects(projects);
-			fillTodoList(currentProject);
-			fillSideBar(currentProject);
-		});
-	});
-	window.addEventListener('resize', () => resizeTodoAddBtn(addBtn));
-	resizeTodoAddBtn(addBtn);
-	return addBtn;
-}
-
-function fillTodoList(project: Project): void {
-	todoList.innerHTML = '';
-	project.todoList
-		.filter(todo => !todo.checked)
-		.forEach(todo => addTodoElement(todo));
-	project.todoList
-		.filter(todo => todo.checked)
-		.forEach(todo => addTodoElement(todo));
-	todoList.appendChild(prepareTodoAddBtn());
-
-	currentProject = project;
-}
-
-function projectSelection(selectedProject: Element, project: Project): void {
-	sidebar
-		.querySelector('.project-selected')
-		?.classList.remove('project-selected');
-	selectedProject.classList.add('project-selected');
-	fillTodoList(project);
-}
-
-function addProjectElement(project: Project, selected: boolean): void {
-	const element: HTMLElement = buildProjectElement(project);
-	element.addEventListener('click', () => projectSelection(element, project));
-	if (selected) projectSelection(element, project);
-	sidebar.appendChild(element);
-}
-
-function fillSideBar(selectedProject?: Project) {
-	sidebar.innerHTML = '';
-	projects.forEach(project =>
-		addProjectElement(project, project == selectedProject)
-	);
-}
-
-// function fillSampleData() {
-// 	localStorage.setItem('projects', JSON.stringify(sampleData));
-// }
-
-main.appendChild(todoList);
+main.appendChild(todoList.element);
+sidebar.appendChild(projectList.element);
 content.appendChild(header);
 content.appendChild(footer);
 content.appendChild(sidebar);
 content.appendChild(main);
 document.body.appendChild(content);
 
-fillSideBar(projects[0]);
+projectList.fill(projects[0]);
