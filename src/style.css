@@ -43,7 +43,7 @@
 		--primary-100: #d90429;
 		--primary-200: #ff98aa;
 		--primary-300: #fdf6fd;
-		--accent-100: #ffadad;
+		--accent-100: #fb7e7e;
 		--accent-200: #ffd6a5;
 		--text-100: #4b4f5d;
 		--text-200: #6a738b;
@@ -233,6 +233,10 @@ h6,
 	aspect-ratio: 1 / 1;
 }
 
+.no-border {
+	border: none;
+}
+
 .bordered-primary-100 {
 	border: 1px solid var(--primary-100);
 }
@@ -276,8 +280,28 @@ h6,
 	box-shadow: 0px 0px 20px var(--primary-100);
 }
 
-.project.project-selected {
+.project-box {
+	gap: 5px;
+}
+
+.project {
+	gap: 5px;
+}
+
+.project-box.project-selected > * {
 	border: 1px solid var(--primary-100);
+	transform: translateX(-2px);
+}
+
+.project-edit-button,
+.project-delete-button {
+	height: 100%;
+}
+
+.project-edit-button > svg,
+.project-delete-button > svg {
+	fill: var(--accent-100);
+	height: 3ch;
 }
 
 .todo:not(.todo-selected) .todo-hidden,
@@ -323,6 +347,11 @@ h6,
 	user-select: none;
 }
 
+.project-title {
+	max-width: 10vw;
+	overflow-wrap: break-word;
+}
+
 .todo-box {
 	display: grid;
 	grid-template:
@@ -353,7 +382,7 @@ h6,
 
 .todo-edit-button,
 .todo-delete-button {
-	fill: var(--primary-100);
+	fill: var(--accent-100);
 }
 
 .todo-edit-button {

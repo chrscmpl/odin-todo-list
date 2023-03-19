@@ -5,6 +5,7 @@ import TodoList from './todoList';
 import DAO from './DataAccessObject';
 import Project from './dataObjects/Project';
 import Todo from './dataObjects/Todo';
+import showProjectCompilationPopup from './components/projectCompilationPopup';
 
 export default class EventHandler {
 	private static instance: EventHandler | null = null;
@@ -122,5 +123,40 @@ export default class EventHandler {
 		const size = this.getTodoAddBtnSize(addBtn);
 		addBtn.style.height = size.height;
 		addBtn.style.width = size.width;
+	}
+
+	public addProject() {
+		showProjectCompilationPopup().then(result => {
+			if (!result) return;
+			const newProject = new Project({ title: result });
+			this.projects.push(newProject);
+			DAO.storeProjects(this.projects);
+			this.projectList.fill(newProject, this.projects);
+		});
+	}
+
+	public editProject(project: Project) {
+		showProjectCompilationPopup(project).then(result => {
+			if (!result) return;
+			project.title = result;
+			DAO.storeProjects(this.projects);
+			this.projectList.fill(this.currentProject, this.projects);
+		});
+	}
+
+	public deleteProject(project: Project, projectElement: HTMLElement): void {
+		showDeletePopup().then(result => {
+			if (!result) return;
+			this.projects = this.projects.filter(aProject => aProject !== project);
+			projectElement.remove();
+
+			if (project === this.currentProject) {
+				this.currentProject = this.projects[0];
+				if (this.currentProject)
+					this.projectList.fill(this.currentProject, this.projects);
+				else this.todoList.element.innerHTML = '';
+			}
+			DAO.storeProjects(this.projects);
+		});
 	}
 }

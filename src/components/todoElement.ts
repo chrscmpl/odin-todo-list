@@ -1,13 +1,27 @@
 import Todo from '../dataObjects/Todo';
 
-export default function buildTodoElement(todo: Todo): HTMLElement {
-	const todoElement = document.createElement('div');
-	todoElement.className = 'todo-box';
-	todoElement.appendChild(buildCheckbox(todo));
-	todoElement.appendChild(buildTodoSection(todo));
-	todoElement.appendChild(buildEditButton());
-	todoElement.appendChild(buildDeleteButton());
-	return todoElement;
+export default function buildTodoBox(todo: Todo) {
+	const todoBox = document.createElement('div');
+	todoBox.className = 'todo-box';
+
+	const { checkbox, todoSection, editButton, deleteButton } =
+		buildElements(todo);
+
+	todoBox.appendChild(checkbox);
+	todoBox.appendChild(todoSection);
+	todoBox.appendChild(editButton);
+	todoBox.appendChild(deleteButton);
+
+	return { todoBox, checkbox, todoSection, editButton, deleteButton };
+}
+
+function buildElements(todo: Todo) {
+	return {
+		checkbox: buildCheckbox(todo),
+		todoSection: buildTodoSection(todo),
+		editButton: buildEditButton(),
+		deleteButton: buildDeleteButton(),
+	};
 }
 
 function buildTodoSection(todo: Todo): HTMLElement {

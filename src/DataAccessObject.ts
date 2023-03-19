@@ -3,6 +3,12 @@ import Project, { ProjectData } from './dataObjects/Project';
 const defaultValue = [new Project({ title: 'Default Project' })];
 const defaultStringValue = JSON.stringify(defaultValue);
 
+let isEnabled = true;
+
+export function enable(enabled: boolean) {
+	isEnabled = enabled;
+}
+
 export function getStoredProjects(): Project[] {
 	try {
 		const projects = (
@@ -25,6 +31,7 @@ export function getStoredProjects(): Project[] {
 }
 
 export function storeProjects(projects: Project[]) {
+	if (!isEnabled) return;
 	localStorage.setItem(
 		'projects',
 		JSON.stringify(projects.map(project => project.toData()))
@@ -37,5 +44,5 @@ function sortTodos(project: Project): void {
 	);
 }
 
-const DAO = { getStoredProjects, storeProjects };
+const DAO = { enable, getStoredProjects, storeProjects };
 export default DAO;

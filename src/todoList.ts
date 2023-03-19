@@ -2,7 +2,7 @@ import Project from './dataObjects/Project';
 import Todo from './dataObjects/Todo';
 import EventHandler from './eventHandler';
 import buildAddButton from './components/addButton';
-import buildTodoElement from './components/todoElement';
+import buildTodoBox from './components/todoElement';
 
 export default class TodoList {
 	private _element: HTMLElement = document.createElement('div');
@@ -37,24 +37,20 @@ export default class TodoList {
 	}
 
 	private addTodo(todo: Todo): void {
-		const todoElement = buildTodoElement(todo);
-		const todoSection = todoElement.querySelector('.todo')!;
-		const checkbox = todoElement.querySelector('.todo-checkbox')!;
-		const deleteButton = todoElement.querySelector('.todo-delete-button')!;
-		const editButton = todoElement.querySelector('.todo-edit-button')!;
-		todoSection.addEventListener('click', () =>
-			EventHandler.getEventHandler().todoSelection(todoSection)
+		const todoElement = buildTodoBox(todo);
+		todoElement.todoSection.addEventListener('click', () =>
+			EventHandler.getEventHandler().todoSelection(todoElement.todoSection)
 		);
-		checkbox.addEventListener('change', () => {
-			EventHandler.getEventHandler().todoChecked(todo, todoSection);
+		todoElement.checkbox.addEventListener('change', () => {
+			EventHandler.getEventHandler().todoChecked(todo, todoElement.todoSection);
 		});
-		deleteButton.addEventListener('click', () => {
-			EventHandler.getEventHandler().deleteTodo(todo, todoElement);
+		todoElement.deleteButton.addEventListener('click', () => {
+			EventHandler.getEventHandler().deleteTodo(todo, todoElement.todoBox);
 		});
-		editButton.addEventListener('click', () => {
+		todoElement.editButton.addEventListener('click', () => {
 			EventHandler.getEventHandler().editTodo(todo);
 		});
-		this.element.appendChild(todoElement);
+		this.element.appendChild(todoElement.todoBox);
 	}
 
 	public fill(project: Project): void {
@@ -81,6 +77,7 @@ export default class TodoList {
 	public get project(): Project {
 		return this._project;
 	}
+
 	private set project(value: Project) {
 		this._project = value;
 	}

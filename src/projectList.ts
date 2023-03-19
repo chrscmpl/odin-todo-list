@@ -1,6 +1,7 @@
 import Project from './dataObjects/Project';
 import EventHandler from './eventHandler';
-import buildProjectElement from './components/projectElement';
+import buildProjectBox from './components/projectElement';
+import buildAddButton from './components/addButton';
 
 export default class ProjectList {
 	private _element = document.createElement('div');
@@ -22,21 +23,49 @@ export default class ProjectList {
 		return this.element;
 	}
 
-	public addProject(project: Project, selected: boolean): void {
-		const element: HTMLElement = buildProjectElement(project);
-		element.addEventListener('click', () =>
-			EventHandler.getEventHandler().projectSelection(element, project)
+	private buildAddButton(): HTMLElement {
+		const addBtn = buildAddButton();
+		addBtn.addEventListener('click', () =>
+			EventHandler.getEventHandler().addProject()
 		);
-		if (selected)
-			EventHandler.getEventHandler().projectSelection(element, project);
-		this.element.appendChild(element);
+		const height = this.element.querySelector('.project')?.clientHeight ?? 20;
+		addBtn.style.height = `${height}px`;
+		addBtn.style.width = '100%';
+		return addBtn;
 	}
 
-	public fill(selectedProject?: Project) {
+	public addProject(project: Project, selected: boolean): void {
+		const projectElement = buildProjectBox(project);
+		projectElement.projectSection.addEventListener('click', () =>
+			EventHandler.getEventHandler().projectSelection(
+				projectElement.projectBox,
+				project
+			)
+		);
+		projectElement.deleteButton.addEventListener('click', () =>
+			EventHandler.getEventHandler().deleteProject(
+				project,
+				projectElement.projectBox
+			)
+		);
+		projectElement.editButton.addEventListener('click', () =>
+			EventHandler.getEventHandler().editProject(project)
+		);
+		if (selected)
+			EventHandler.getEventHandler().projectSelection(
+				projectElement.projectBox,
+				project
+			);
+		this.element.appendChild(projectElement.projectBox);
+	}
+
+	public fill(selectedProject?: Project, projects?: Project[]) {
 		this.element.innerHTML = '';
+		if (projects) this.projects = projects;
 		this.projects.forEach(project =>
 			this.addProject(project, project == selectedProject)
 		);
+		this.element.appendChild(this.buildAddButton());
 	}
 
 	public get element() {
