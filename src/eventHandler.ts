@@ -3,9 +3,10 @@ import ProjectList from './projectList';
 import showTodoCompilationPopup from './components/todoCompilationPopup';
 import TodoList from './todoList';
 import DAO from './DataAccessObject';
-import Project from './dataObjects/Project';
+import Project, { ProjectData } from './dataObjects/Project';
 import Todo from './dataObjects/Todo';
 import showProjectCompilationPopup from './components/projectCompilationPopup';
+import sampleData from './sample.json';
 
 export default class EventHandler {
 	private static instance: EventHandler | null = null;
@@ -158,5 +159,27 @@ export default class EventHandler {
 			}
 			DAO.storeProjects(this.projects);
 		});
+	}
+
+	private randomInt(max: number) {
+		return Math.floor(Math.random() * max);
+	}
+
+	public startSampleMode(btn: HTMLButtonElement) {
+		DAO.enable(false);
+		const sampleProjects: Project[] = (sampleData as ProjectData[]).map(
+			project => new Project(project)
+		);
+		sampleProjects.forEach(project =>
+			project.todoList.forEach(todo => {
+				todo.dueDate = new Date();
+				todo.dueDate.setDate(todo.dueDate.getDate() + this.randomInt(90));
+				todo.dueDate.setHours(this.randomInt(23), this.randomInt(59));
+			})
+		);
+		this.projects = sampleProjects;
+		this.currentProject = sampleProjects[0];
+		this.projectList.fill(this.currentProject, this.projects);
+		btn.remove();
 	}
 }

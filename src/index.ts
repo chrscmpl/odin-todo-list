@@ -13,6 +13,10 @@ import EventHandler from './eventHandler';
 const projects: Project[] = DAO.getStoredProjects();
 const currentProject: Project =
 	projects[0] ?? new Project({ title: 'Default Project' });
+const projectList = new ProjectList(projects);
+const todoList = new TodoList(currentProject);
+
+EventHandler.buildEventHandler(projects, currentProject, todoList, projectList);
 
 const content = document.createElement('div');
 content.id = 'content';
@@ -20,10 +24,6 @@ const header = buildHeader();
 const footer = buildFooter();
 const sidebar = buildSidebar();
 const main = buildMain();
-const projectList = new ProjectList(projects);
-const todoList = new TodoList(currentProject);
-
-EventHandler.buildEventHandler(projects, currentProject, todoList, projectList);
 
 main.appendChild(todoList.element);
 sidebar.appendChild(projectList.element);

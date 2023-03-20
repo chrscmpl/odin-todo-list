@@ -233,6 +233,14 @@ h6,
 	aspect-ratio: 1 / 1;
 }
 
+.position-relative {
+	position: relative;
+}
+
+.position-absolute {
+	position: absolute;
+}
+
 .no-border {
 	border: none;
 }
@@ -481,6 +489,11 @@ h6,
 input {
 	accent-color: var(--primary-100);
 	color-scheme: var(--color-scheme);
+}
+
+.sample-data-btn {
+	right: 20px;
+	padding: 0 10px;
 }
 
 .swal-confirm-button {

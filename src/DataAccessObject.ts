@@ -11,11 +11,11 @@ export function enable(enabled: boolean) {
 
 export function getStoredProjects(): Project[] {
 	try {
-		const projects = (
-			JSON.parse(
-				localStorage.getItem('projects') ?? defaultStringValue
-			) as ProjectData[]
-		).map(project => new Project(project));
+		const storedValue = localStorage.getItem('projects');
+		if (!storedValue || storedValue === '[]') return defaultValue;
+		const projects = (JSON.parse(storedValue) as ProjectData[]).map(
+			project => new Project(project)
+		);
 		projects.forEach(sortTodos);
 		return projects;
 	} catch {
